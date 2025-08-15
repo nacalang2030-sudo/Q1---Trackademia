@@ -5,17 +5,18 @@ Q1 Project -Task Management System (Python)
 Trackademy is a basic task management system scripted in Python that has been created to help you stay organized in generating and managing tasks.  
 It enables the creation, viewing, editing, and deletion of tasks, as well as tracking deadlines and automatically marking tasks as overdue.    
 
-🎯 Objectives  
-- To create a practical and easy-to-use task tracker in Python.  
-- To help users handle deadline and status-updated tasks.  
-- To present a minimalistic, easy-to-understand interface without creating excess complexity.  
+Objectives  
+- To create a practical and simple tool for students to use for managing their academic tasks    
+- To allow grade calculation based on given scores and weight percentages.  
+- To provide a centralized system for tracking assignments, deadlines, and class schedules.  
+- To encourage productivity by helping students stay organized.  
 
- Features planned  
+Features planned  
 - Include tasks with a title, an optional description, and a deadline.  
 - See the list of all tasks, including the status notes (In Progress, Completed, Overdue).  
 - Edit information about tasks.  
-- Remove tasks of no longer required tasks.  
-Automatic pick out and marking of late jobs.  
+- Remove tasks that are no longer required.  
+- Automatic pick out and marking of late jobs.  
 
  Inputs &  Outputs  
 Inputs:
