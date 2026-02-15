@@ -10,7 +10,14 @@ Version v1.0.0 — August 15, 2025
    - Add Subjects 
    - Enter Schedules
  
-Version v1.1.0 - 
+Version v1.1.0 - febuary 15, 2026
+ Added
+  - interactive GUI schedule viewing system
+ Implemented
+  - guide options
+ Updated 
+  - subtle tracking system
+  - Made the code easier to modify
 
 
 
