@@ -10,7 +10,12 @@ Version v1.0.0 — August 15, 2025
    - Add Subjects 
    - Enter Schedules
  
-Version v1.1.0 - 
+Version v1.1.0 - Febuary 15, 2026
+Added
+- Interactive options to improve user interaction
+Implemented
+- Grade and schedule tracking system
+
 
 
 
