@@ -4,28 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trackademia</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Trackademia!</h1>
-    </header>
-    <main>
-        <section id="introduction">
-            <h2>About Trackademia</h2>
-            <p>Your platform for tracking academic progress.</p>
-        </section>
-        <section id="features">
-            <h2>Features</h2>
-            <ul>
-                <li>Track academic courses</li>
-                <li>Monitor grades and achievements</li>
-                <li>Set academic goals</li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Trackademia</p>
-    </footer>
+
+<h1>Welcome to Trackademia!</h1>
+
+<div class="container">
+    <h2>Add Grade</h2>
+    <input type="text" id="gradeSubject" placeholder="Subject name">
+    <input type="number" id="gradeValue" placeholder="Grade">
+    <button onclick="addGrade()">Save Grade</button>
+    <h3>Grades</h3>
+    <ul id="gradeList"></ul>
+    <p id="average"></p>
+</div>
+
+<div class="container">
+    <h2>Add Assignment</h2>
+    <input type="text" id="assignmentName" placeholder="Assignment name">
+    <input type="text" id="assignmentDeadline" placeholder="Deadline">
+    <button onclick="addAssignment()">Save Assignment</button>
+    <h3>Assignments</h3>
+    <ul id="assignmentList"></ul>
+</div>
+
+<div class="container">
+    <h2>Add Schedule</h2>
+    <input type="text" id="scheduleSubject" placeholder="Subject name">
+    <input type="text" id="scheduleTime" placeholder="Day & Time">
+    <button onclick="addSchedule()">Save Schedule</button>
+    <h3>Schedules</h3>
+    <ul id="scheduleList"></ul>
+</div>
+
+<script>
+    let grades = {};
+    let assignments = [];
+    let schedules = {};
+
+    function addGrade() {
+        const subject = document.getElementById("gradeSubject").value;
+        const grade = parseFloat(document.getElementById("gradeValue").value);
+
+        if (!subject || isNaN(grade)) {
+            alert("Please enter valid subject and grade.");
+            return;
+        }
+
+        grades[subject] = grade;
+        displayGrades();
+        document.getElementById("gradeSubject").value = "";
+        document.getElementById("gradeValue").value = "";
+    }
+
+    function displayGrades() {
+        const list = document.getElementById("gradeList");
+        list.innerHTML = "";
+
+        let total = 0;
+        let count = 0;
+
+        for (let subject in grades) {
+            const li = document.createElement("li");
+            li.textContent = subject + ": " + grades[subject];
+            list.appendChild(li);
+            total += grades[subject];
+            count++;
+        }
+
+        document.getElementById("average").textContent =
+            count > 0 ? "Average Grade: " + (total / count).toFixed(2) : "";
+    }
+
+    function addAssignment() {
+        const name = document.getElementById("assignmentName").value;
+        const deadline = document.getElementById("assignmentDeadline").value;
+
+        if (!name || !deadline) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        assignments.push({ name, deadline });
+        displayAssignments();
+        document.getElementById("assignmentName").value = "";
+        document.getElementById("assignmentDeadline").value = "";
+    }
+
+    function displayAssignments() {
+        const list = document.getElementById("assignmentList");
+        list.innerHTML = "";
+
+        assignments.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item.name + " - Due: " + item.deadline;
+            list.appendChild(li);
+        });
+    }
+
+    function addSchedule() {
+        const subject = document.getElementById("scheduleSubject").value;
+        const time = document.getElementById("scheduleTime").value;
+
+        if (!subject || !time) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        schedules[subject] = time;
+        displaySchedules();
+        document.getElementById("scheduleSubject").value = "";
+        document.getElementById("scheduleTime").value = "";
+    }
+
+    function displaySchedules() {
+        const list = document.getElementById("scheduleList");
+        list.innerHTML = "";
+
+        for (let subject in schedules) {
+            const li = document.createElement("li");
+            li.textContent = subject + ": " + schedules[subject];
+            list.appendChild(li);
+        }
+    }
+</script>
+
 </body>
 </html>
