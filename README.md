@@ -149,29 +149,6 @@ Association for Computing Machinery. (2018). ACM Code of Ethics and Professional
 5. Return to menu
 6. Exit when user selects "0"
 
-## Repository Structure
-```
-trackademia/
-│
-├── main.py
-└── README.md
-```
-
-## Installation
-1. Install Python 3.x
-2. Clone repository:
-   ```bash
-git clone https://github.com/your-username/trackademia.git
-``` 
-3. Navigate to folder:
-   ```bash
-cd trackademia
-``` 
-4. Run:
-   ```bash
-python main.py
-```
-
 ## How to Use
 1. Run the program
 2. Choose a menu option
