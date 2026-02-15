@@ -154,4 +154,9 @@ Association for Computing Machinery. (2018). ACM Code of Ethics and Professional
 2. Choose a menu option
 3. Enter required information
 4. View saved data
-5. Select "0" to exit
+
+## Contributors
+1. Nadine Angela A. Calang
+2. Liahm Pyia A. Gumanit
+3. MC David C. Demiar
+6. Select "0" to exit
