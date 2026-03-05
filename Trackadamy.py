@@ -1,5 +1,35 @@
 print("Welcome to Trackademia!")
 
+import os
+import hashlib
+
+user_file = "users.txt"
+
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def users_exists(username):
+    if not os.path.exists(user_file):
+        return False
+        #LAST CODE LAST CODE!!!
+  
+def main():
+    options = {"1":register, "2":login, "3": exit}
+    while true:
+        print("\1. Register\n 2.Login\n 3. Exit")
+        choice = input("Choose an option:")
+        action = options.get(choice)
+        if action:
+            action()
+
+        else:
+            print("invalid option")
+
+
+        
+    
+
 grades = {}          # Saves grades with the name of the subject
 assignments = []     # Saves assignments, including the deadlines
 schedules = {}       # Saves schedules with subject name
@@ -78,3 +108,4 @@ while True:   # A repeat loop ->
     else:
         print("====  HAVE A NICE DAY!  ====")
         print("Invalid choice. Please try again.")
+
