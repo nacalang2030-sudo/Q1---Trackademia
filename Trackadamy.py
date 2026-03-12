@@ -1,111 +1,117 @@
-print("Welcome to Trackademia!")
+import customtkinter as ctk
 
-import os
-import hashlib
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
 
-user_file = "users.txt"
+# DATA STORAGE
+grades = {}
+assignments = []
+schedules = {}
 
+# MAIN WINDOW
+app = ctk.CTk()
+app.title("Trackademia")
+app.geometry("700x500")
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+title = ctk.CTkLabel(app, text="Trackademia Student Manager", font=("Arial", 24))
+title.pack(pady=10)
 
-def users_exists(username):
-    if not os.path.exists(user_file):
-        return False
-        #LAST CODE LAST CODE!!!
-  
-def main():
-    options = {"1":register, "2":login, "3": exit}
-    while true:
-        print("\1. Register\n 2.Login\n 3. Exit")
-        choice = input("Choose an option:")
-        action = options.get(choice)
-        if action:
-            action()
+tabview = ctk.CTkTabview(app)
+tabview.pack(fill="both", expand=True, padx=20, pady=20)
 
-        else:
-            print("invalid option")
+tabview.add("Grades")
+tabview.add("Assignments")
+tabview.add("Schedules")
 
+# ---------------- GRADES TAB ----------------
 
-        
-    
+subject_entry = ctk.CTkEntry(tabview.tab("Grades"), placeholder_text="Subject")
+subject_entry.pack(pady=5)
 
-grades = {}          # Saves grades with the name of the subject
-assignments = []     # Saves assignments, including the deadlines
-schedules = {}       # Saves schedules with subject name
+grade_entry = ctk.CTkEntry(tabview.tab("Grades"), placeholder_text="Grade")
+grade_entry.pack(pady=5)
 
-while True:   # A repeat loop ->
-    print("\nMenu:")
-    print("1 - Add Grade")
-    print("2 - View Grades")
-    print("3 - Add Assignment")
-    print("4 - View Assignments")
-    print("5 - Add Class Schedule")
-    print("6 - View Schedules")
-    print("0 - Exit")
+grades_box = ctk.CTkTextbox(tabview.tab("Grades"), height=200)
+grades_box.pack(pady=10)
 
-    print("===============")
-    choice = input("Enter your choice: ")
+def add_grade():
+    subject = subject_entry.get()
+    grade = float(grade_entry.get())
+    grades[subject] = grade
+    grades_box.insert("end", f"Saved: {subject} - {grade}\n")
 
-    if choice == "1":
-        subject = input("Enter the name of the subject: ")
-        grade = float(input("Enter grade: "))
-        grades[subject] = grade
-        print("======  GRADE  ======")
-        print("Grade saved")
-
-    elif choice == "2":
-        print("Grades:")
-        if grades:
-            for subject, grade in grades.items():
-                print(f"{subject}: {grade}")
-            average = sum(grades.values()) / len(grades)
-            print("======  GRADE  ======")
-            print(f"Average Grade: {average:.2f}")
-        else:
-            print("======  GRADE  ======")
-            print("No grades saved yet :>")
-
-    elif choice == "3":
-        name = input("Enter assignment's name: ")
-        deadline = input("Enter the deadline: ")
-        assignments.append((name, deadline))
-        print("====== ASSIGNMENTS  ======")
-        print("Assignment saved!")
-
-    elif choice == "4":
-        if assignments:
-            print("Assignments:")
-            for name, deadline in assignments:
-                print("====== ASSIGNMENTS  ======")
-                print(f"{name} - Due: {deadline}")
-        else:
-            print("====== ASSIGNMENTS  ======")
-            print("No assignments saved yet")
-
-    elif choice == "5":
-        subject = input("Enter subject name: ")
-        schedule = input("Enter schedule (Day & Time): ")
-        schedules[subject] = schedule
-        print("======  SCHEDULE  ======")
-        print("Schedule saved!")
-
-    elif choice == "6":
-        if schedules:
-            print("Schedules:")
-            for subject, time in schedules.items():
-                print("======  SCHEDULES  ======")
-                print(f"{subject}: {time}")
-        else:
-            print("======  SCHEDULES  ======")
-            print("No schedules saved yet.")
-
-    elif choice == "0":
-        print("====  HAVE A NICE DAY!  ====")
-        print("Thank you for using Trackademia!")
-        break
-
+def view_grades():
+    grades_box.delete("1.0","end")
+    if grades:
+        total = 0
+        for subject, grade in grades.items():
+            grades_box.insert("end", f"{subject}: {grade}\n")
+            total += grade
+        avg = total / len(grades)
+        grades_box.insert("end", f"\nAverage: {avg:.2f}")
     else:
-        print("====  HAVE A NICE DAY!  ====")
-        print("Invalid choice. Please try again.")
+        grades_box.insert("end","No grades saved")
 
+add_grade_btn = ctk.CTkButton(tabview.tab("Grades"), text="Add Grade", command=add_grade)
+add_grade_btn.pack(pady=5)
+
+view_grade_btn = ctk.CTkButton(tabview.tab("Grades"), text="View Grades", command=view_grades)
+view_grade_btn.pack(pady=5)
+
+# ---------------- ASSIGNMENTS TAB ----------------
+
+assign_name = ctk.CTkEntry(tabview.tab("Assignments"), placeholder_text="Assignment Name")
+assign_name.pack(pady=5)
+
+assign_deadline = ctk.CTkEntry(tabview.tab("Assignments"), placeholder_text="Deadline")
+assign_deadline.pack(pady=5)
+
+assign_box = ctk.CTkTextbox(tabview.tab("Assignments"), height=200)
+assign_box.pack(pady=10)
+
+def add_assignment():
+    name = assign_name.get()
+    deadline = assign_deadline.get()
+    assignments.append((name, deadline))
+    assign_box.insert("end", f"{name} - Due: {deadline}\n")
+
+def view_assignments():
+    assign_box.delete("1.0","end")
+    if assignments:
+        for name, deadline in assignments:
+            assign_box.insert("end", f"{name} - Due: {deadline}\n")
+    else:
+        assign_box.insert("end","No assignments saved")
+
+ctk.CTkButton(tabview.tab("Assignments"), text="Add Assignment", command=add_assignment).pack(pady=5)
+ctk.CTkButton(tabview.tab("Assignments"), text="View Assignments", command=view_assignments).pack(pady=5)
+
+# ---------------- SCHEDULE TAB ----------------
+
+sched_subject = ctk.CTkEntry(tabview.tab("Schedules"), placeholder_text="Subject")
+sched_subject.pack(pady=5)
+
+sched_time = ctk.CTkEntry(tabview.tab("Schedules"), placeholder_text="Day & Time")
+sched_time.pack(pady=5)
+
+sched_box = ctk.CTkTextbox(tabview.tab("Schedules"), height=200)
+sched_box.pack(pady=10)
+
+def add_schedule():
+    subject = sched_subject.get()
+    time = sched_time.get()
+    schedules[subject] = time
+    sched_box.insert("end", f"{subject} - {time}\n")
+
+def view_schedule():
+    sched_box.delete("1.0","end")
+    if schedules:
+        for subject, time in schedules.items():
+            sched_box.insert("end", f"{subject}: {time}\n")
+    else:
+        sched_box.insert("end","No schedules saved")
+
+ctk.CTkButton(tabview.tab("Schedules"), text="Add Schedule", command=add_schedule).pack(pady=5)
+ctk.CTkButton(tabview.tab("Schedules"), text="View Schedules", command=view_schedule).pack(pady=5)
+
+app.mainloop()
