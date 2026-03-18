@@ -35,3 +35,12 @@ Enhanced overall interface consistency.
 Fixed invalid choice message bug (missing quotation mark).
 Final debugging and minor formatting improvements.
 General performance polishing.
+
+
+## Version 1.6 - March 4, 2026
+Added a login system for authentication.
+Improved security and user acess control.
+
+## Version 1.7 - March 12, 2026
+Converted program interface from python to ctk/Tkinter.
+Enhanced graphical user and overall user experiences.
