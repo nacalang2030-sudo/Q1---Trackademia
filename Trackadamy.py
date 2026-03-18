@@ -1,13 +1,16 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
+#color 1 red (#890304)
+#color 2 dark blue (00113a)
+#color 3 lighter dark blue (#002263)
 # --------------------- COLORS & STYLES ---------------------
 BG_COLOR = "#2E2E2E"
 TAB_BG = "#3C3F41"
 FG_COLOR = "#FFFFFF"
 BTN_COLOR = "#5A9BD5"
 BTN_HOVER = "#4178A0"
-ENTRY_BG = 555555"
+ENTRY_BG = "#555555"
 ENTRY_FG = "#FFFFFF"
 FONT_TITLE = ("Arial", 24, "bold")
 FONT_NORMAL = ("Arial", 12)
