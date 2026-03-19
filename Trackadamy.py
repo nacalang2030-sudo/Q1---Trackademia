@@ -22,6 +22,7 @@ username_entry.grid(row=1, column=0)
 password_label.grid(row=1, column=0)
 password_entry.grid(row=1, column=0)
 
+# DELETE THIS 8:43 / 33:11
 
 
 
