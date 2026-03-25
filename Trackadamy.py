@@ -8,15 +8,15 @@ window.geometry('340x440')
 window.configure(bg = '#f8f2bf')
 
 #Creating widgets
-login_label = tkinter.Label(window, text="Login")
-username_label = tkinter.Label(window, text="Username")
-username_entry = tkinter.Entry(window)
-password_entry = tkinter.Entry(window, show="*")
-password_label = tkinter.Label(window, text="Password")
-login_button = tkinter.Button(window, text="Login")
+login_label = tkinter.Label(window, text="Login", fg='#00113a', font="Raleway", 30)
+username_label = tkinter.Label(window, text="Username", fg='#00113a', font="Raleway", 16)
+username_entry = tkinter.Entry(window, font=("Raleway", 16))
+password_entry = tkinter.Entry(window, show="*", font=("Raleway", 16))
+password_label = tkinter.Label(window, text="Password", fg='#00113a', font="Raleway", 16)
+login_button = tkinter.Button(window, text="Login", bg='#002263', fg='#00113a', font="Raleway", 16 )
 
 #Placing widgets on the screen
-login_label.grid(row=), column=0, columnspan=2)
+login_label.grid(row=), column=0, columnspan=2, sticky="news")
 username_label.grid(row=1, column=0)
 username_entry.grid(row=1, column=1)
 password_label.grid(row=2, column=0)
@@ -32,11 +32,12 @@ login_button.grid(row=3, column= 0, columnspan=2)
 
 
 
+
 window.mainloop() 
 
 
 #color 1 red (#890304)
-#color 2 dark blue (00113a)
+#color 2 dark blue (#00113a)
 #color 3 lighter dark blue (#002263)
 # --------------------- COLORS & STYLES ---------------------
 BG_COLOR = "#2E2E2E"
