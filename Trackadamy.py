@@ -18,11 +18,13 @@ login_button = tkinter.Button(window, text="Login")
 #Placing widgets on the screen
 login_label.grid(row=), column=0, columnspan=2)
 username_label.grid(row=1, column=0)
-username_entry.grid(row=1, column=0)
-password_label.grid(row=1, column=0)
-password_entry.grid(row=1, column=0)
+username_entry.grid(row=1, column=1)
+password_label.grid(row=2, column=0)
+password_entry.grid(row=2, column=1)
+login_button.grid(row=3, column= 0, columnspan=2)
 
-# DELETE THIS 8:43 / 33:11
+
+
 
 
 
