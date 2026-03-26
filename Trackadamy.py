@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from database import dateline
 #--------------------- LOG-IN SYSTEM -----------------------
 
 window = tkinter.Tk()
@@ -7,25 +8,34 @@ window.title('Login Form')
 window.geometry('340x440')
 window.configure(bg = '#f8f2bf')
 
+def login():
+    username = "johnsmith"
+    password = "12345"
+    if username_entry.get()==username and password_entry.get()==password:
+        messagebox.showinfo(title="Logins Success", message="You sucessfullu logged in.")
+    else: 
+        messagebox.showerror(title="Error", message="Invalid login.")
+
+
+frame = tkinter.Frame(bg = '#f8f2bf')
+
 #Creating widgets
-login_label = tkinter.Label(window, text="Login", fg='#00113a', font="Raleway", 30)
-username_label = tkinter.Label(window, text="Username", fg='#00113a', font="Raleway", 16)
-username_entry = tkinter.Entry(window, font=("Raleway", 16))
-password_entry = tkinter.Entry(window, show="*", font=("Raleway", 16))
-password_label = tkinter.Label(window, text="Password", fg='#00113a', font="Raleway", 16)
-login_button = tkinter.Button(window, text="Login", bg='#002263', fg='#00113a', font="Raleway", 16 )
+login_label = tkinter.Label(frame,text="Login", fg='#00113a', font="Raleway", 30)
+username_label = tkinter.Label(frame, text="Username", fg='#00113a', font="Raleway", 16)
+username_entry = tkinter.Entry(frame, font=("Raleway", 16))
+password_entry = tkinter.Entry(frame, show="*", font=("Raleway", 16))
+password_label = tkinter.Label(frame, l text="Password", fg='#00113a', font="Raleway", 16)
+login_button = tkinter.Button(frame, text="Login", bg='#002263', fg='#00113a', font="Raleway", 16, command=login )
 
 #Placing widgets on the screen
-login_label.grid(row=), column=0, columnspan=2, sticky="news")
+login_label.grid(row=), column=0, columnspan=2, sticky="news", pady=40))
 username_label.grid(row=1, column=0)
-username_entry.grid(row=1, column=1)
+username_entry.grid(row=1, column=1, pady=15)
 password_label.grid(row=2, column=0)
-password_entry.grid(row=2, column=1)
-login_button.grid(row=3, column= 0, columnspan=2)
+password_entry.grid(row=2, column=1, pady=15)
+login_button.grid(row=3, column= 0, columnspan=2, pady=30 )
 
-# DELETE THIS AFTERRR 19:42
-
-
+frame.pack()
 
 
 
