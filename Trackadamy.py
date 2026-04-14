@@ -4,13 +4,13 @@ import json
 import os
 
 # --------------------- COLORS & STYLES ---------------------
-BG_COLOR = "#2E2E2E"
-TAB_BG = "#3C3F41"
-FG_COLOR = "#FFFFFF"
-BTN_COLOR = "#5A9BD5"
-BTN_HOVER = "#4178A0"
-ENTRY_BG = "#555555"
-ENTRY_FG = "#FFFFFF"
+BG_COLOR = "#1A1026"
+TAB_BG = "#241537"
+FG_COLOR = "#E9D8FD"
+BTN_COLOR = "#FFFFFF"
+BTN_HOVER = "#E5E7EB"
+ENTRY_BG = "#3B2A5A"
+ENTRY_FG = "#F5F3FF"
 FONT_TITLE = ("Arial", 24, "bold")
 FONT_NORMAL = ("Arial", 12)
 
