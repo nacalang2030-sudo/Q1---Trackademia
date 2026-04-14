@@ -1,29 +1,27 @@
 # Trackademia
-## Q1 Project – Task Management System (Python)
+## Q1 Project – Task Management System (Python) 
 
-## Overview
-Trackademia is a simple Python-based academic management system designed to help students manage grades, assignments, and class schedules in one centralized console application. The system allows users to input and view grades, monitor assignments with deadlines, and organize class schedules.
+## Overview Trackademia is a simple Python-based academic management system designed to help students manage grades, assignments, and class schedules in one centralized Graphical User Interface (GUI). The system allows users to log in, input and view grades, monitor assignments with deadlines, and organize class schedules.
 
-It is designed to be lightweight, easy to use, and practical for students.
+It is designed to be lightweight, easy to use, and practical for students. 
 
-## Problem Statement
-Students often manage grades, assignments, and schedules separately, which can lead to confusion, missed deadlines, and poor academic tracking. Without a centralized system, academic information becomes disorganized.
+## Problem Statement Students often manage grades, assignments, and schedules separately, which can lead to confusion, missed deadlines, and poor academic tracking. Without a centralized system, academic information becomes disorganized.
 
 There is a need for a simple, structured tool that allows students to:
 - Store and compute grades
 - Track assignments and deadlines
 - Organize class schedules
+ Trackademia provides a centralized and organized solution.
 
-Trackademia provides a centralized and organized solution.
-
-## Objectives
-- To develop a simple academic management tool using Python
+## Objectives - To develop a simple academic management tool using Python's Tkinter library.\ 
+- To implement a secure log in gateway for user authentication.
 - To allow users to input and keep track of their subject grades
 - To store and display assignments with deadlines
 - To manage class schedules efficiently
-- To provide an easy-to-use console interface for students
+- To provide an easy-to-useconsole interface for students
 
 ## Key Features
+- Log in system
 - Add, view, and store subject grades
 - Add assignments with deadlines
 - View saved assignments
@@ -35,14 +33,20 @@ Trackademia provides a centralized and organized solution.
 ## Methodology
 
 ### System Structure
-The system runs using a continuous `while True` loop that displays a menu and allows the user to select options until they choose to exit.
+The system is built using the Tkinter framework. It follows a modular functional flow:
 
-Data is stored using built-in Python data structures:
-- **Dictionary** for grades
-- **List** for assignments
-- **Dictionary** for schedules
+ - **Authentication Layer**: A login window validates the user.
+ - **Dashboard Layer**: Upon successful login, the main dashboard initializes.
+ - **Data Layer**: Uses Python data structures to handle information during the session:
+ - **Dictionary** for grades (Key: Subject, Value: Grade).
+ - **List of Tuples** for assignments (Name, Deadline).
+ - **Dictionary** for schedules (Subject, Time/Day).
 
 ### Core Feature Implementation
+
+#### Log in
+validation is performed vie the try_login() funtion.
+If the netries matched the stored constants the login windows is destroyed and the main pplication is launched.
 
 #### Grade Storage and Average Calculation
 Grades are stored in a dictionary:
