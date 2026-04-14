@@ -6,22 +6,36 @@ import os
 # --------------------- COLORS & STYLES ---------------------
 BG_COLOR = "#1A1026"
 TAB_BG = "#241537"
-FG_COLOR = "#E9D8FD"
+FG_COLOR = "#E9D8FD" 
+
 BTN_COLOR = "#FFFFFF"
-BTN_HOVER = "#E5E7EB"
-ENTRY_BG = "#3B2A5A"
-ENTRY_FG = "#F5F3FF"
-FONT_TITLE = ("Arial", 24, "bold")
+BTN_HOVER = "#E5E7EB" 
+
+ENTRY_BG = "#3B2A5A" 
+ENTRY_FG = "#F5F3FF" 
+
+FONT_TITLE = ("Arial", 24, "bold") 
 FONT_NORMAL = ("Arial", 12)
 
 
 
 # --------------------- UTILITY FUNCTIONS ---------------------
 def style_entry(entry):
-    entry.configure(bg=ENTRY_BG, fg=ENTRY_FG, insertbackground=FG_COLOR, font=FONT_NORMAL)
+    entry.configure(bg=ENTRY_BG, 
+                    fg=ENTRY_FG, 
+                    insertbackground=FG_COLOR,
+                    font=FONT_NORMAL
+                   )
 
 def style_button(button):
-    button.configure(bg=BTN_COLOR, fg=FG_COLOR, font=FONT_NORMAL, relief="flat", padx=10, pady=5)
+    button.configure(
+        bg=BTN_COLOR, 
+        fg="#1A1026", 
+        font=FONT_NORMAL,
+        relief="flat", 
+        padx=10,
+        pady=5
+    )
     button.bind("<Enter>", lambda e: button.configure(bg=BTN_HOVER))
     button.bind("<Leave>", lambda e: button.configure(bg=BTN_COLOR))
 
@@ -38,12 +52,13 @@ def save_data_file(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
-
-# --------------------- MAIN WINDOW ---------------------
-
 grades = {}
 assignments = []
 schedules = []
+
+# --------------------- MAIN WINDOW ---------------------
+
+
 
 def build_main_app():
     login_frame.pack_forget()
@@ -347,12 +362,12 @@ def build_main_app():
 root = tk.Tk()
 root.title("Login")
 root.geometry("340x440")
-root.configure(bg="#2e728f")
+root.configure(bg=BG_COLOR)
 
-login_frame = tk.Frame(root, bg="#153344")
+login_frame = tk.Frame(root, bg=TB_BG)
 login_frame.pack(fill="both", expand=True)
 
-login_label = tk.Label(login_frame, text="Login", fg='#00113a', font=("Raleway", 24, "bold"))
+login_label = tk.Label(login_frame, text="Login", fg=FG_COLOR, font=("Raleway", 24, "bold"))
 username_label = tk.Label(login_frame, text="Username", fg='#00113a', font=("Raleway", 16))
 username_entry = tk.Entry(login_frame, font=("Raleway", 16))
 password_label = tk.Label(login_frame, text="Password", fg='#00113a', font=("Raleway", 16))
@@ -364,7 +379,7 @@ def login():
     else:
         messagebox.showerror("Error", "Invalid login")
 
-login_button = tk.Button(login_frame, text="Login", bg='#002263', fg='#00113a', font=("Raleway", 16), command=login)
+login_button = tk.Button(login_frame, text="Login", bg='#002263', fg=FG_COLOR, font=("Raleway", 16), command=login)
 
 login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
 username_label.grid(row=1, column=0)
@@ -373,5 +388,6 @@ password_label.grid(row=2, column=0)
 password_entry.grid(row=2, column=1, pady=15)
 login_button.grid(row=3, column=0, columnspan=2, pady=30)
 
-root.mainloop()
+root.mainloop()      
+
 
