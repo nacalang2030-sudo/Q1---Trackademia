@@ -33,20 +33,18 @@ There is a need for a simple, structured tool that allows students to:
 ## Methodology
 
 ### System Structure
-The system is built using the Tkinter framework. It follows a modular functional flow:
-
- - **Authentication Layer**: A login window validates the user.
- - **Dashboard Layer**: Upon successful login, the main dashboard initializes.
- - **Data Layer**: Uses Python data structures to handle information during the session:
- - **Dictionary** for grades (Key: Subject, Value: Grade).
- - **List of Tuples** for assignments (Name, Deadline).
- - **Dictionary** for schedules (Subject, Time/Day).
+The system is built using a GUI-based:
+- **login system** autthenticates user credentials
+- **main application** displays a tabbed interface using ttk.Notebook
+- **Tabs** Grades, Assignments, schedules
 
 ### Core Feature Implementation
 
-#### Log in
-validation is performed vie the try_login() funtion.
-If the netries matched the stored constants the login windows is destroyed and the main pplication is launched.
+#### Log in system
+- validates username and password
+- displays success or erros using messagebox
+- shows the main application after succesfully logging in
+
 
 #### Grade Storage and Average Calculation
 Grades are stored in a dictionary:
@@ -61,24 +59,33 @@ When viewing grades:
 - It computes the average using: `average = sum(grades.values()) / len(grades)`
 
 #### Assignment Management
-Assignments are stored in a list of tuples:
+Assignments are stored in a list of dictionaries:
 ```python
-assignments.append((name, deadline))
-```
+assignments.append({
+    "name": name,
+    "due": deadline,
+    "completed": False
+})
+```     
 
-Each tuple contains:
+Each assignments contains:
 - Assignment name
 - Deadline
 
 The system loops through the list to display saved assignments.
 
 #### Schedule Management
-Schedules are stored in a dictionary:
+Schedules are stored in a list of dictionaries:
 ```python
-schedules[subject] = schedule
+schedules.append({
+    "event": subject,
+    "time": time
+})
 ```
 
-Each subject is linked to its scheduled day and time.
+Each schedule contains:
+- Event or subject name
+- Day and time
 
 ## Technologies Used and Justification
 
@@ -87,32 +94,33 @@ Python was chosen because:
 - It is beginner-friendly and readable
 - It allows fast development of logic-based systems
 - It provides built-in data structures like lists and dictionaries
-- It is suitable for console-based applications
+- It supports GUI development through Tkinter library
 - No external libraries were used, keeping the system simple and focused on core programming concepts
 
 ## Design Decisions and Trade-offs
 
-### Console-Based Interface
-**Decision:** Used a text-based menu system.
+### GUI-Based Interface
+**Decision:** Used a JSON file storage to save and load data.
 
-**Trade-off:** Less visually interactive than a GUI, however it simplifies development and focuses on logic.
+**Trade-off:**  More complex to develop than a text-based interface, but significantly improves user experience and visual interaction.
+
 
 ### In-Memory Data Storage
 **Decision:** Data is stored in dictionaries and lists during runtime.
 
-**Trade-off:** Data is not saved permanently after the program closes, but this keeps it simpler and avoids file or database complexity.
+**Trade-off:** Data is required manual saving to preserve data, but this keeps it simpler and easy to manage.
 
 ### Menu Loop Structure
-**Decision:** Used `while True` loop for continuous interaction.
+**Decision:** Used Tkinter's eent-driven programming.
 
-**Benefit:** Keeps the program running until the user exits and improves user experience.
+**Benefit:** Smoother user interaction through buttons and GUI events.
 
 ## Ethical Considerations
 Trackademia follows responsible programming practices:
 - No collection of personal or sensitive data
 - All code is original and written by the developers
 - No misuse of external copyrighted material
-- The system avoids storing confidential information
+- The data is stored locally in a JSON file and is not shared externally.
 
 ### Programming and Computing Ethics
 This project aligns with the ACM Code of Ethics by:
@@ -125,6 +133,7 @@ This project aligns with the ACM Code of Ethics by:
 Association for Computing Machinery. (2018). ACM Code of Ethics and Professional Conduct. https://www.acm.org/code-of-ethics
 
 ## Inputs
+- Username and password (string)
 - Subject name (string)
 - Grade (float)
 - Assignment name (string)
@@ -138,26 +147,35 @@ Association for Computing Machinery. (2018). ACM Code of Ethics and Professional
 - Display of assignments with deadlines
 - Display of schedules
 - Confirmation messages (e.g., "Grades saved", "Assignment saved!")
+- saved data file (student_data,json)
 - Exit message
 
 ## Logic Plan
 
 ### Program Flow
-1. Display welcome message
-2. Show menu options
-3. User selects a choice
-4. Program executes corresponding block:
+1. Display login window
+2. User enters username and password
+3. if valid, main application window will load
+4. Show menu options
+5. User selects a choice
+6. Program executes corresponding block:
    - Add/View grades
    - Add/View assignments
    - Add/View schedules
-5. Return to menu
-6. Exit when user selects "0"
+7. Save changes or load data using JSON file
+8. Return to menu
+9. Exit when user selects "0"
 
 ## How to Use
 1. Run the program
-2. Choose a menu option
-3. Enter required information
-4. View saved data
+2. shows log in window
+3. Choose through tabs:
+   - Grades
+   - assignments
+   - schedules
+5. Enter required information
+6. Click buttons to manage data
+7. Use Save Data to store progress and Load Data to retrieve it
 
 ## Contributors
 1. Nadine Angela A. Calang
