@@ -4,20 +4,37 @@ import json
 import os
 
 # --------------------- COLORS & STYLES ---------------------
-BG_COLOR = "#1A1026"
-TAB_BG = "#241537"
+# Enhanced modern color scheme
+BG_COLOR = "#0D0221"  # Darker, richer background
+TAB_BG = "#1A0833"
 FG_COLOR = "#E9D8FD" 
 
-BTN_COLOR = "#FFFFFF"
-BTN_HOVER = "#E5E7EB" 
+BTN_COLOR = "#A855F7"  # Purple button
+BTN_HOVER = "#D8B4FE"  # Light purple on hover
+BTN_ACTIVE = "#9333EA"  # Darker purple on click
 
-ENTRY_BG = "#3B2A5A" 
+ENTRY_BG = "#2D1B4E" 
 ENTRY_FG = "#F5F3FF" 
 
-FONT_TITLE = ("Arial", 24, "bold") 
-FONT_NORMAL = ("Arial", 12)
+# Enhanced fonts - added Segoe UI for modern look
+FONT_TITLE = ("Segoe UI", 28, "bold") 
+FONT_NORMAL = ("Segoe UI", 11)
+FONT_LABEL = ("Segoe UI", 11, "bold")
+FONT_SMALL = ("Segoe UI", 9)
+FONT_SUBTITLE = ("Segoe UI", 16, "bold")
 
+# Additional color aliases and variables
+BG_PRIMARY = BG_COLOR
+BG_SECONDARY = "#140428"
+ACCENT_PRIMARY = "#A855F7"
+ACCENT_SECONDARY = "#D8B4FE"
+FG_PRIMARY = FG_COLOR
+FG_MUTED = "#C4B5D4"
 
+# Spacing constants
+PADDING_SMALL = 8
+PADDING_MEDIUM = 12
+PADDING_LARGE = 20
 
 # --------------------- UTILITY FUNCTIONS ---------------------
 def style_entry(entry):
@@ -27,17 +44,57 @@ def style_entry(entry):
                     font=FONT_NORMAL
                    )
 
+def create_placeholder_entry(parent, placeholder="", width=30):
+    """Create a styled Entry widget with modern look."""
+    entry = tk.Entry(parent, font=FONT_NORMAL, width=width,
+                    bg=ENTRY_BG, fg=ENTRY_FG,
+                    insertbackground=ACCENT_SECONDARY, relief="flat",
+                    bd=0, borderwidth=0)
+    
+    # Add a frame for border effect
+    border_frame = tk.Frame(parent, bg=ACCENT_PRIMARY, highlightthickness=0)
+    border_frame.pack_before(entry)
+    entry_inner = tk.Frame(border_frame, bg=ENTRY_BG, highlightthickness=0)
+    entry_inner.pack(padx=1, pady=1)
+    
+    return entry
+
+def create_button(parent, text, command, style="primary", width=20):
+    """Create a modern styled button with hover effects."""
+    if style == "primary":
+        button = tk.Button(parent, text=text, command=command, 
+                          font=FONT_NORMAL, width=width,
+                          bg=ACCENT_PRIMARY, fg="white",
+                          relief="flat", bd=0, borderwidth=0,
+                          padx=PADDING_MEDIUM, pady=PADDING_SMALL,
+                          activebackground=BTN_ACTIVE, activeforeground="white",
+                          cursor="hand2")
+    else:
+        button = tk.Button(parent, text=text, command=command,
+                          font=FONT_NORMAL, width=width,
+                          bg=ACCENT_PRIMARY, fg="white",
+                          relief="flat", bd=0, borderwidth=0,
+                          padx=PADDING_MEDIUM, pady=PADDING_SMALL,
+                          activebackground=BTN_ACTIVE, activeforeground="white",
+                          cursor="hand2")
+    return button
+
 def style_button(button):
     button.configure(
-        bg=BTN_COLOR, 
-        fg="#1A1026", 
+        bg=ACCENT_PRIMARY, 
+        fg="white", 
         font=FONT_NORMAL,
-        relief="flat", 
-        padx=10,
-        pady=5
+        relief="flat",
+        padx=PADDING_MEDIUM,
+        pady=PADDING_SMALL,
+        activebackground=BTN_ACTIVE,
+        activeforeground="white",
+        bd=0,
+        borderwidth=0,
+        cursor="hand2"
     )
-    button.bind("<Enter>", lambda e: button.configure(bg=BTN_HOVER))
-    button.bind("<Leave>", lambda e: button.configure(bg=BTN_COLOR))
+    button.bind("<Enter>", lambda e: button.configure(bg=BTN_HOVER) if button.cget("state") != "disabled" else None)
+    button.bind("<Leave>", lambda e: button.configure(bg=ACCENT_PRIMARY) if button.cget("state") != "disabled" else None)
 
 # --------------------- DATA STORAGE ---------------------
 DATA_FILE = "student_data.json"
@@ -61,10 +118,24 @@ schedules = []
 
 
 def build_main_app():
+    global login_frame
     login_frame.pack_forget()
+    
+    # Define screen variables
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    
+    root.attributes('-fullscreen', True)  
     root.title("Trackademia")
     root.geometry("750x550")
     root.configure(bg=BG_COLOR)
+    
+    # Allow exiting fullscreen with Escape key
+    def exit_fullscreen(event=None):
+        root.attributes('-fullscreen', False)
+        root.geometry("1200x800")  
+    
+    root.bind('<Escape>', exit_fullscreen)
 
     title = tk.Label(root, text="Trackademia Student Manager", font=FONT_TITLE, fg=FG_COLOR, bg=BG_COLOR)
     title.pack(pady=15)
@@ -123,6 +194,14 @@ def build_main_app():
     grade_entry.bind("<FocusIn>", lambda e: grade_entry.delete(0, "end") if grade_entry.get() == "Grade" else None)
     grade_entry.bind("<FocusOut>", lambda e: grade_entry.insert(0, "Grade") if grade_entry.get() == "" else None)
 
+    # Add units input field
+    units_entry = tk.Entry(grades_tab)
+    units_entry.insert(0, "Units (3 for most, 4 for English)")
+    units_entry.pack(pady=5)
+    style_entry(units_entry)
+    units_entry.bind("<FocusIn>", lambda e: units_entry.delete(0, "end") if units_entry.get() == "Units (3 for most, 4 for English)" else None)
+    units_entry.bind("<FocusOut>", lambda e: units_entry.insert(0, "Units (3 for most, 4 for English)") if units_entry.get() == "" else None)
+
     grades_box = tk.Text(grades_tab, height=15, bg=ENTRY_BG, fg=FG_COLOR, font=FONT_NORMAL, insertbackground=FG_COLOR)
     grades_box.pack(pady=10)
 
@@ -136,10 +215,26 @@ def build_main_app():
             if grade < 0 or grade > 100:
                 messagebox.showerror("Error", "Grade must be between 0 and 100")
                 return
-            grades[subject] = grade
+            
+            # Get units and set defaults
+            units_text = units_entry.get().strip()
+            if units_text == "Units (3 for most, 4 for English)" or units_text == "":
+                # Auto-set units based on subject
+                units = 4 if subject == "English" else 3
+            else:
+                try:
+                    units = float(units_text)
+                except ValueError:
+                    messagebox.showerror("Error", "Units must be a number")
+                    return
+            
+            # Store grade with units
+            grades[subject] = {"grade": grade, "units": units}
             subject_combo.set("Select Subject")
             grade_entry.delete(0, "end")
             grade_entry.insert(0, "Grade")
+            units_entry.delete(0, "end")
+            units_entry.insert(0, "Units (3 for most, 4 for English)")
             view_grades()
         except ValueError:
             messagebox.showerror("Error", "Grade must be a number")
@@ -147,12 +242,23 @@ def build_main_app():
     def view_grades():
         grades_box.delete("1.0","end")
         if grades:
-            total = 0
-            for subject, grade in grades.items():
-                grades_box.insert("end", f"{subject}: {grade}\n")
-                total += grade
-            avg = total / len(grades)
-            grades_box.insert("end", f"\nAverage: {avg:.2f}")
+            total_grade_units = 0
+            total_units = 0
+            grades_box.insert("end", "Subject                Grade  Units\n")
+            grades_box.insert("end", "-" * 40 + "\n")
+            for subject, data in grades.items():
+                grade = data["grade"]
+                units = data["units"]
+                grades_box.insert("end", f"{subject:<20} {grade:>6.2f}  {units:>5.1f}\n")
+                total_grade_units += grade * units
+                total_units += units
+            
+            if total_units > 0:
+                gwa = total_grade_units / total_units
+                grades_box.insert("end", "-" * 40 + "\n")
+                grades_box.insert("end", f"Weighted GWA: {gwa:.2f}\n")
+            else:
+                grades_box.insert("end", "No units recorded")
         else:
             grades_box.insert("end","No grades saved")
 
@@ -177,10 +283,20 @@ def build_main_app():
     view_btn = tk.Button(grades_tab, text="View Grades", command=view_grades)
     delete_btn = tk.Button(grades_tab, text="Delete Grade", command=delete_grade)
     clear_btn = tk.Button(grades_tab, text="Clear All", command=clear_all_grades)
-    add_btn.pack(pady=5)
-    view_btn.pack(pady=5)
-    delete_btn.pack(pady=5)
-    clear_btn.pack(pady=5)
+    
+    # Create button frame for horizontal layout
+    button_frame = tk.Frame(grades_tab, bg=TAB_BG)
+    button_frame.pack(pady=10, fill="x", padx=10)
+    
+    add_btn = tk.Button(button_frame, text="Add Grade", command=add_grade)
+    view_btn = tk.Button(button_frame, text="View Grades", command=view_grades)
+    delete_btn = tk.Button(button_frame, text="Delete Grade", command=delete_grade)
+    clear_btn = tk.Button(button_frame, text="Clear All", command=clear_all_grades)
+    add_btn.pack(side="left", padx=5)
+    view_btn.pack(side="left", padx=5)
+    delete_btn.pack(side="left", padx=5)
+    clear_btn.pack(side="left", padx=5)
+    
     style_button(add_btn)
     style_button(view_btn)
     style_button(delete_btn)
@@ -270,11 +386,22 @@ def build_main_app():
     complete_btn2 = tk.Button(assignments_tab, text="Mark Complete", command=complete_assignment)
     delete_btn2 = tk.Button(assignments_tab, text="Delete Assignment", command=delete_assignment)
     clear_btn2 = tk.Button(assignments_tab, text="Clear All", command=clear_all_assignments)
-    add_btn2.pack(pady=5)
-    view_btn2.pack(pady=5)
-    complete_btn2.pack(pady=5)
-    delete_btn2.pack(pady=5)
-    clear_btn2.pack(pady=5)
+    
+    # Create button frame for horizontal layout
+    button_frame2 = tk.Frame(assignments_tab, bg=TAB_BG)
+    button_frame2.pack(pady=10, fill="x", padx=10)
+    
+    add_btn2 = tk.Button(button_frame2, text="Add Assignment", command=add_assignment)
+    view_btn2 = tk.Button(button_frame2, text="View Assignments", command=view_assignments)
+    complete_btn2 = tk.Button(button_frame2, text="Mark Complete", command=complete_assignment)
+    delete_btn2 = tk.Button(button_frame2, text="Delete Assignment", command=delete_assignment)
+    clear_btn2 = tk.Button(button_frame2, text="Clear All", command=clear_all_assignments)
+    add_btn2.pack(side="left", padx=5)
+    view_btn2.pack(side="left", padx=5)
+    complete_btn2.pack(side="left", padx=5)
+    delete_btn2.pack(side="left", padx=5)
+    clear_btn2.pack(side="left", padx=5)
+    
     style_button(add_btn2)
     style_button(view_btn2)
     style_button(complete_btn2)
@@ -346,10 +473,20 @@ def build_main_app():
     view_btn3 = tk.Button(schedules_tab, text="View Schedules", command=view_schedule)
     delete_btn3 = tk.Button(schedules_tab, text="Delete Schedule", command=delete_schedule_func)
     clear_btn3 = tk.Button(schedules_tab, text="Clear All", command=clear_all_schedules_func)
-    add_btn3.pack(pady=5)
-    view_btn3.pack(pady=5)
-    delete_btn3.pack(pady=5)
-    clear_btn3.pack(pady=5)
+    
+    # Create button frame for horizontal layout
+    button_frame3 = tk.Frame(schedules_tab, bg=TAB_BG)
+    button_frame3.pack(pady=10, fill="x", padx=10)
+    
+    add_btn3 = tk.Button(button_frame3, text="Add Schedule", command=add_schedule)
+    view_btn3 = tk.Button(button_frame3, text="View Schedules", command=view_schedule)
+    delete_btn3 = tk.Button(button_frame3, text="Delete Schedule", command=delete_schedule_func)
+    clear_btn3 = tk.Button(button_frame3, text="Clear All", command=clear_all_schedules_func)
+    add_btn3.pack(side="left", padx=5)
+    view_btn3.pack(side="left", padx=5)
+    delete_btn3.pack(side="left", padx=5)
+    clear_btn3.pack(side="left", padx=5)
+    
     style_button(add_btn3)
     style_button(view_btn3)
     style_button(delete_btn3)
@@ -358,36 +495,112 @@ def build_main_app():
     # Auto-load data on startup
     load_data_file()
 
-# --------------------- LOG-IN SYSTEM -----------------------
+# ==================== LOGIN INTERFACE ====================
 root = tk.Tk()
-root.title("Login")
-root.geometry("340x440")
-root.configure(bg=BG_COLOR)
+root.title("Trackademia - Login")
+root.configure(bg=BG_PRIMARY)
+root.resizable(False, False)
 
-login_frame = tk.Frame(root, bg=TB_BG)
-login_frame.pack(fill="both", expand=True)
+# Define screen variables and center the window
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+window_width = 500
+window_height = 600
+center_x = (screen_width - window_width) // 2
+center_y = (screen_height - window_height) // 2
+root.geometry(f"{window_width}x{window_height}+{center_x}+{center_y}")
 
-login_label = tk.Label(login_frame, text="Login", fg=FG_COLOR, font=("Raleway", 24, "bold"))
-username_label = tk.Label(login_frame, text="Username", fg='#00113a', font=("Raleway", 16))
-username_entry = tk.Entry(login_frame, font=("Raleway", 16))
-password_label = tk.Label(login_frame, text="Password", fg='#00113a', font=("Raleway", 16))
-password_entry = tk.Entry(login_frame, show="*", font=("Raleway", 16))
+main_frame = tk.Frame(root, bg=BG_PRIMARY)
+main_frame.pack(fill="both", expand=True)
 
+# Modern gradient-style header with enhanced spacing
+header = tk.Frame(main_frame, bg=ACCENT_PRIMARY, height=140)
+header.pack(fill="x")
+header.pack_propagate(False)
+
+# Add decorative top bar
+top_bar = tk.Frame(header, bg=ACCENT_SECONDARY, height=3)
+top_bar.pack(fill="x")
+
+title_label = tk.Label(header, text="🎓 Trackademia", font=FONT_TITLE,
+                      fg="white", bg=ACCENT_PRIMARY)
+title_label.pack(pady=(20, 5))
+
+subtitle_label = tk.Label(header, text="Student Management System",
+                         font=("Segoe UI", 10), fg=ACCENT_SECONDARY, bg=ACCENT_PRIMARY)
+subtitle_label.pack(pady=(0, 20))
+
+# Centered login form container with padding
+login_frame = tk.Frame(main_frame, bg=BG_PRIMARY)
+login_frame.pack(expand=True, fill="both", padx=PADDING_LARGE, pady=PADDING_LARGE)
+
+# Modern card-style login form with border effect
+border_frame = tk.Frame(login_frame, bg=ACCENT_PRIMARY, highlightthickness=0)
+border_frame.pack(expand=True, fill="both")
+
+form_frame = tk.Frame(border_frame, bg=BG_SECONDARY)
+form_frame.pack(fill="both", expand=True, padx=2, pady=2)
+
+# Form title with icon
+form_title = tk.Label(form_frame, text="🔐 SIGN IN", font=FONT_SUBTITLE,
+                     fg=ACCENT_SECONDARY, bg=BG_SECONDARY)
+form_title.pack(anchor="w", padx=PADDING_LARGE, pady=(PADDING_LARGE, 5))
+
+form_subtitle = tk.Label(form_frame, text="Enter your credentials to continue", 
+                        font=("Segoe UI", 9), fg=FG_MUTED, bg=BG_SECONDARY)
+form_subtitle.pack(anchor="w", padx=PADDING_LARGE, pady=(0, PADDING_LARGE))
+
+# Separator line
+separator = tk.Frame(form_frame, bg=ACCENT_PRIMARY, height=1)
+separator.pack(fill="x", padx=PADDING_LARGE, pady=(0, PADDING_LARGE))
+
+# Username field
+username_label = tk.Label(form_frame, text="👤 Username", font=FONT_LABEL,
+         fg=ACCENT_SECONDARY, bg=BG_SECONDARY)
+username_label.pack(anchor="w", padx=PADDING_LARGE, pady=(0, PADDING_SMALL))
+
+username_entry = tk.Entry(form_frame, font=FONT_NORMAL, width=35,
+                    bg=ENTRY_BG, fg=ENTRY_FG,
+                    insertbackground=ACCENT_SECONDARY, relief="flat",
+                    bd=0, borderwidth=0)
+username_entry.pack(padx=PADDING_LARGE, pady=(0, PADDING_LARGE), fill="x")
+
+# Password field
+password_label = tk.Label(form_frame, text="🔑 Password", font=FONT_LABEL,
+         fg=ACCENT_SECONDARY, bg=BG_SECONDARY)
+password_label.pack(anchor="w", padx=PADDING_LARGE, pady=(0, PADDING_SMALL))
+
+password_entry = tk.Entry(form_frame, font=FONT_NORMAL, width=35,
+                         bg=ENTRY_BG, fg=ENTRY_FG, show="•",
+                         insertbackground=ACCENT_SECONDARY, relief="flat",
+                         bd=0, borderwidth=0)
+password_entry.pack(padx=PADDING_LARGE, pady=(0, PADDING_LARGE*1.5), fill="x")
+
+# Login function
 def login():
-    if username_entry.get() == "johnsmith" and password_entry.get() == "12345":
+    username = username_entry.get().strip()
+    password = password_entry.get().strip()
+
+    if username == "johnsmith" and password == "12345":
         build_main_app()
     else:
-        messagebox.showerror("Error", "Invalid login")
+        messagebox.showerror("Login Failed", "Invalid credentials!\n\nDemo: johnsmith / 12345")
+        password_entry.delete(0, "end")
 
-login_button = tk.Button(login_frame, text="Login", bg='#002263', fg=FG_COLOR, font=("Raleway", 16), command=login)
+# Login button with modern styling
+login_btn = create_button(form_frame, "🚀 LOGIN", login, "primary", width=30)
+login_btn.pack(pady=(0, PADDING_MEDIUM), padx=PADDING_LARGE, fill="x", ipady=12)
 
-login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
-username_label.grid(row=1, column=0)
-username_entry.grid(row=1, column=1, pady=15)
-password_label.grid(row=2, column=0)
-password_entry.grid(row=2, column=1, pady=15)
-login_button.grid(row=3, column=0, columnspan=2, pady=30)
+# Demo info with styling
+info_frame = tk.Frame(form_frame, bg=BG_SECONDARY)
+info_frame.pack(fill="x", padx=PADDING_LARGE, pady=(PADDING_MEDIUM, PADDING_LARGE))
+
+info = tk.Label(info_frame, text="📋 Demo Credentials: johnsmith / 12345",
+               font=FONT_SMALL, fg=FG_MUTED, bg=BG_SECONDARY, justify="center")
+info.pack(anchor="center")
+
+# Allow Enter key for login
+root.bind('<Return>', lambda e: login())
 
 root.mainloop()      
-
 
