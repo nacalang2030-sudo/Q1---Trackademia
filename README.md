@@ -1,184 +1,155 @@
-# Trackademia
-## Q1 Project – Task Management System (Python) 
+Trackademia is a Python-based academic management system built using Tkinter GUI. It helps students organize their grades and assignments in one centralized and interactive interface.
 
-## Overview Trackademia is a simple Python-based academic management system designed to help students manage grades, assignments, and class schedules in one centralized Graphical User Interface (GUI). The system allows users to log in, input and view grades, monitor assignments with deadlines, and organize class schedules.
+The system allows users to:
 
-It is designed to be lightweight, easy to use, and practical for students. 
+Input and compute weighted grades (GWA)
+Track assignments with deadlines
+Monitor pending and completed tasks
+Save and load data using a JSON file
 
-## Problem Statement Students often manage grades, assignments, and schedules separately, which can lead to confusion, missed deadlines, and poor academic tracking. Without a centralized system, academic information becomes disorganized.
+It is designed to be simple, visually organized, and practical for everyday student use.
 
-There is a need for a simple, structured tool that allows students to:
-- Store and compute grades
-- Track assignments and deadlines
-- Organize class schedules
- Trackademia provides a centralized and organized solution.
+#Problem Statement#
+Students often track grades and assignments separately, which leads to:
 
-## Objectives - To develop a simple academic management tool using Python's Tkinter library.\ 
-- To implement a secure log in gateway for user authentication.
-- To allow users to input and keep track of their subject grades
-- To store and display assignments with deadlines
-- To manage class schedules efficiently
-- To provide an easy-to-useconsole interface for students
+Missed deadlines
+Disorganized academic data
+Difficulty computing overall performance
 
-## Key Features
-- Log in system
-- Add, view, and store subject grades
-- Add assignments with deadlines
-- View saved assignments
-- Add class schedules
-- View saved schedules
-- Menu-driven interface
-- Input validation for invalid menu choices
+There is a need for a centralized tool that allows students to:
 
-## Methodology
+Store and compute grades with units
+Track assignment deadlines
+Monitor academic progress in real time
 
-### System Structure
-The system is built using a GUI-based:
-- **login system** autthenticates user credentials
-- **main application** displays a tabbed interface using ttk.Notebook
-- **Tabs** Grades, Assignments, schedules
+Trackademia provides a structured and user-friendly solution.
 
-### Core Feature Implementation
+##Objectives##
+Develop a GUI-based academic tool using Python Tkinter
+Allow users to input and manage grades with units
+Compute General Weighted Average (GWA)
+Enable assignment tracking with deadline monitoring
+Provide data persistence using JSON
+Create an intuitive and easy-to-use interface
+Key Features
+Grades Management
+Add subject grades (1.0 – 5.0)
+Input subject units
+Automatically compute weighted GWA
+View all grades in a formatted table
+Delete individual subjects or clear all
+Assignment Tracker
+Add assignments with due dates (YYYY-MM-DD)
+Automatically calculates days remaining
+Status labels:
+DONE
+PENDING
+Deadline indicators:
+OVERDUE
+DUE TODAY
+DUE TOMORROW
+SOON (≤ 3 days)
+Mark assignments as done
+Delete or clear assignments
 
-#### Log in system
-- validates username and password
-- displays success or erros using messagebox
-- shows the main application after succesfully logging in
+#Data Management#
+Save data to student_data.json
+Load saved data anytime
 
+Error handling for:
+Missing file
+Corrupted file
+Empty save attempts
+Dashboard Info Bar
 
-#### Grade Storage and Average Calculation
-Grades are stored in a dictionary:
-```python
-grades = {}
-```
+##Displays:##
+Current GWA
+Number of pending assignments
+Technologies Used
+Python
+Core programming language
+Handles logic and data structures
+Tkinter
+GUI framework for interface
+Uses widgets such as Frame, Label, Button, Text, and Notebook
+JSON
+Used for data persistence
+Stores grades and assignments
+Built-in Libraries
+datetime for deadline calculations
+os for file handling
+System Structure
+Data Storage
 
-Each subject is used as a key, and the grade is stored as its value.
+##Grades (Dictionary):##
 
-When viewing grades:
-- The program iterates through the dictionary
-- It computes the average using: `average = sum(grades.values()) / len(grades)`
+grades = {
+    "Math": {"grade": 1.5, "units": 3}
+}
 
-#### Assignment Management
-Assignments are stored in a list of dictionaries:
-```python
-assignments.append({
-    "name": name,
-    "due": deadline,
-    "completed": False
-})
-```     
+Assignments (List of Dictionaries):
 
-Each assignments contains:
-- Assignment name
-- Deadline
+assignments = [
+    {"name": "Project", "due": "2026-05-01", "done": False}
+]
+Core Logic
+GWA Calculation
+GWA = sum(grade × units) / total units
 
-The system loops through the list to display saved assignments.
+Deadline Tracking
+Converts string to date
+Computes difference from current date
+Outputs readable status (e.g., “2 days left”)
 
-#### Schedule Management
-Schedules are stored in a list of dictionaries:
-```python
-schedules.append({
-    "event": subject,
-    "time": time
-})
-```
+#How to Use#
+Run the program
+The main window will open
+Grades Tab
+Select subject
+Enter grade and units
+Click Add
+Click View All to display
+Assignments Tab
+Enter assignment name
+Enter deadline (YYYY-MM-DD)
+Click Add
+Use:
+Mark Done
+Delete
+View All
+Data
+Click Save Data to store progress
+Click Load Data to retrieve saved data
+Design Decisions and Trade-offs
 
-Each schedule contains:
-- Event or subject name
-- Day and time
+##GUI-Based Interface##
+Provides a more user-friendly experience compared to text-based systems
+Requires more development effort
 
-## Technologies Used and Justification
+##JSON Storage##
+Enables persistent data saving
+Requires manual save/load actions
 
-### Python
-Python was chosen because:
-- It is beginner-friendly and readable
-- It allows fast development of logic-based systems
-- It provides built-in data structures like lists and dictionaries
-- It supports GUI development through Tkinter library
-- No external libraries were used, keeping the system simple and focused on core programming concepts
+#In-Memory Data Structures#
+Simple and efficient for runtime operations
+Data is lost if not saved
+Ethical Considerations
+No collection of personal or sensitive data
+All code is original
+No external copyrighted material used
+Data is stored locally and not shared externally
+Programming Ethics
 
-## Design Decisions and Trade-offs
-
-### GUI-Based Interface
-**Decision:** Used a JSON file storage to save and load data.
-
-**Trade-off:**  More complex to develop than a text-based interface, but significantly improves user experience and visual interaction.
-
-
-### In-Memory Data Storage
-**Decision:** Data is stored in dictionaries and lists during runtime.
-
-**Trade-off:** Data is required manual saving to preserve data, but this keeps it simpler and easy to manage.
-
-### Menu Loop Structure
-**Decision:** Used Tkinter's eent-driven programming.
-
-**Benefit:** Smoother user interaction through buttons and GUI events.
-
-## Ethical Considerations
-Trackademia follows responsible programming practices:
-- No collection of personal or sensitive data
-- All code is original and written by the developers
-- No misuse of external copyrighted material
-- The data is stored locally in a JSON file and is not shared externally.
-
-### Programming and Computing Ethics
 This project aligns with the ACM Code of Ethics by:
-- Ensuring honesty and integrity in coding
-- Respecting intellectual property
-- Avoiding harm by not collecting unnecessary data
-- Providing clear and transparent system behavior
+Ensuring honesty and integrity in development
+Respecting intellectual property
+Avoiding harm by minimizing data collection
+Providing transparent system behavior
 
-**Reference:**
+##Reference:##
 Association for Computing Machinery. (2018). ACM Code of Ethics and Professional Conduct. https://www.acm.org/code-of-ethics
 
-## Inputs
-- Username and password (string)
-- Subject name (string)
-- Grade (float)
-- Assignment name (string)
-- Assignment deadline (string)
-- Subject schedule (string)
-- Menu choice (string)
-
-## Outputs
-- Display of stored grades
-- Computed average grade
-- Display of assignments with deadlines
-- Display of schedules
-- Confirmation messages (e.g., "Grades saved", "Assignment saved!")
-- saved data file (student_data,json)
-- Exit message
-
-## Logic Plan
-
-### Program Flow
-1. Display login window
-2. User enters username and password
-3. if valid, main application window will load
-4. Show menu options
-5. User selects a choice
-6. Program executes corresponding block:
-   - Add/View grades
-   - Add/View assignments
-   - Add/View schedules
-7. Save changes or load data using JSON file
-8. Return to menu
-9. Exit when user selects "0"
-
-## How to Use
-1. Run the program
-2. shows log in window
-3. Choose through tabs:
-   - Grades
-   - assignments
-   - schedules
-5. Enter required information
-6. Click buttons to manage data
-7. Use Save Data to store progress and Load Data to retrieve it
-
-## Contributors
-1. Nadine Angela A. Calang
-2. Liahm Pyia A. Gumanit
-3. MC David C. Demiar
-6. Select "0" to exit
+##Contributors##
+Nadine Angela A. Calang
+Liahm Pyia A. Gumanit
+MC David C. Demiar
