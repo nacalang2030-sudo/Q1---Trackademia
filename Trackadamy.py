@@ -287,7 +287,7 @@ def main_app():
             return
         for item in assignments:
             if item["name"] == name:
-                item["done"] = True
+                item["done"] = False
                 assign_in.delete(0, "end")
                 messagebox.showinfo("Success", "Marked as done!")
                 view_assign()
