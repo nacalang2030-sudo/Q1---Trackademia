@@ -10,6 +10,7 @@ Save and load data using a JSON file
 It is designed to be simple, visually organized, and practical for everyday student use.
 
 #Problem Statement#
+
 Students often track grades and assignments separately, which leads to:
 
 Missed deadlines
@@ -25,6 +26,7 @@ Monitor academic progress in real time
 Trackademia provides a structured and user-friendly solution.
 
 ##Objectives##
+
 Develop a GUI-based academic tool using Python Tkinter
 Allow users to input and manage grades with units
 Compute General Weighted Average (GWA)
@@ -53,6 +55,7 @@ Mark assignments as done
 Delete or clear assignments
 
 #Data Management#
+
 Save data to student_data.json
 Load saved data anytime
 
@@ -63,6 +66,7 @@ Empty save attempts
 Dashboard Info Bar
 
 ##Displays:##
+
 Current GWA
 Number of pending assignments
 Technologies Used
@@ -97,11 +101,13 @@ GWA Calculation
 GWA = sum(grade × units) / total units
 
 Deadline Tracking
+
 Converts string to date
 Computes difference from current date
 Outputs readable status (e.g., “2 days left”)
 
 #How to Use#
+
 Run the program
 The main window will open
 Grades Tab
@@ -123,14 +129,17 @@ Click Load Data to retrieve saved data
 Design Decisions and Trade-offs
 
 ##GUI-Based Interface##
+
 Provides a more user-friendly experience compared to text-based systems
 Requires more development effort
 
 ##JSON Storage##
+
 Enables persistent data saving
 Requires manual save/load actions
 
 #In-Memory Data Structures#
+
 Simple and efficient for runtime operations
 Data is lost if not saved
 Ethical Considerations
@@ -147,9 +156,11 @@ Avoiding harm by minimizing data collection
 Providing transparent system behavior
 
 ##Reference:##
+
 Association for Computing Machinery. (2018). ACM Code of Ethics and Professional Conduct. https://www.acm.org/code-of-ethics
 
 ##Contributors##
+
 Nadine Angela A. Calang
 Liahm Pyia A. Gumanit
 MC David C. Demiar
